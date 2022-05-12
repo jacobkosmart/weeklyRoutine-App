@@ -16,6 +16,9 @@
 		81EE3946282D170600304DF0 /* weeklyRoutineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81EE3945282D170600304DF0 /* weeklyRoutineTests.swift */; };
 		81EE3950282D170600304DF0 /* weeklyRoutineUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81EE394F282D170600304DF0 /* weeklyRoutineUITests.swift */; };
 		81EE3952282D170600304DF0 /* weeklyRoutineUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81EE3951282D170600304DF0 /* weeklyRoutineUITestsLaunchTests.swift */; };
+		81EE3961282D1A6800304DF0 /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81EE3960282D1A6800304DF0 /* Home.swift */; };
+		81EE3963282D208F00304DF0 /* HabitViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81EE3962282D208F00304DF0 /* HabitViewModel.swift */; };
+		81EE3965282D222E00304DF0 /* AddNewHabit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81EE3964282D222D00304DF0 /* AddNewHabit.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +51,9 @@
 		81EE394B282D170600304DF0 /* weeklyRoutineUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = weeklyRoutineUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		81EE394F282D170600304DF0 /* weeklyRoutineUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = weeklyRoutineUITests.swift; sourceTree = "<group>"; };
 		81EE3951282D170600304DF0 /* weeklyRoutineUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = weeklyRoutineUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		81EE3960282D1A6800304DF0 /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
+		81EE3962282D208F00304DF0 /* HabitViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitViewModel.swift; sourceTree = "<group>"; };
+		81EE3964282D222D00304DF0 /* AddNewHabit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewHabit.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +104,8 @@
 		81EE392E282D170400304DF0 /* weeklyRoutine */ = {
 			isa = PBXGroup;
 			children = (
+				81EE395F282D1A5400304DF0 /* ViewModel */,
+				81EE395E282D1A4A00304DF0 /* View */,
 				81EE392F282D170400304DF0 /* weeklyRoutineApp.swift */,
 				81EE3931282D170400304DF0 /* ContentView.swift */,
 				81EE3933282D170600304DF0 /* Assets.xcassets */,
@@ -131,6 +139,23 @@
 				81EE3951282D170600304DF0 /* weeklyRoutineUITestsLaunchTests.swift */,
 			);
 			path = weeklyRoutineUITests;
+			sourceTree = "<group>";
+		};
+		81EE395E282D1A4A00304DF0 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				81EE3960282D1A6800304DF0 /* Home.swift */,
+				81EE3964282D222D00304DF0 /* AddNewHabit.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		81EE395F282D1A5400304DF0 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				81EE3962282D208F00304DF0 /* HabitViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -265,6 +290,9 @@
 			files = (
 				81EE3939282D170600304DF0 /* Persistence.swift in Sources */,
 				81EE393C282D170600304DF0 /* weeklyRoutine.xcdatamodeld in Sources */,
+				81EE3961282D1A6800304DF0 /* Home.swift in Sources */,
+				81EE3965282D222E00304DF0 /* AddNewHabit.swift in Sources */,
+				81EE3963282D208F00304DF0 /* HabitViewModel.swift in Sources */,
 				81EE3932282D170400304DF0 /* ContentView.swift in Sources */,
 				81EE3930282D170400304DF0 /* weeklyRoutineApp.swift in Sources */,
 			);
