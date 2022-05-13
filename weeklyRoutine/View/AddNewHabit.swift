@@ -136,9 +136,11 @@ struct AddNewHabit: View {
 				}
 				ToolbarItem(placement: .navigationBarTrailing) {
 					Button {
-						if vm.addHabit(context: env.managedObjectContext) {
-							env.dismiss()
-						}
+						Task {
+							if await vm.addHabit(context: env.managedObjectContext) {
+								env.dismiss()
+							}
+						} //: TASK
 					} label: {
 						Text("추가")
 					}
