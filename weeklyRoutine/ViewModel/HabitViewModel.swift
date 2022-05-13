@@ -49,7 +49,15 @@ class HabitViewModel: ObservableObject {
 	
 	// MARK: -  Adding Habit to Database
 	func addHabit(context: NSManagedObjectContext) async -> Bool {
-		let habit = Habit(context: context)
+		// MARK:  Editing Data
+		var habit: Habit
+		if let editHabit = editHabit {
+			habit = editHabit
+			// Removing all pending notification
+			UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: editHabit.notificationIDs ?? [])
+		} else {
+			habit = Habit(context: context)
+		}
 		habit.title = title
 		habit.color = habitColor
 		habit.weekDays = weekDays
@@ -144,6 +152,10 @@ class HabitViewModel: ObservableObject {
 	// MARK: - Deleting Habit From DB
 	func deleteHabit(context: NSManagedObjectContext)-> Bool {
 		if let editHabit = editHabit {
+			if editHabit.isReminderOn {
+				// Removing all pending notification
+				UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: editHabit.notificationIDs ?? [])
+			}
 			context.delete(editHabit)
 			if let _ = try? context.save() {
 				return true
@@ -160,6 +172,13 @@ class HabitViewModel: ObservableObject {
 			return false
 		}
 		return true
+	}
+	
+	// MARK: - Formatting KR Day
+	func getDaySymbolsKR() -> [String] {
+		var calender = Calendar.current
+		calender.locale = Locale(identifier: "ko_KR")
+		return calender.weekdaySymbols
 	}
 }
 
