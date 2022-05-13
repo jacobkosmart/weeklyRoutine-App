@@ -11,7 +11,7 @@ import UserNotifications
 
 class HabitViewModel: ObservableObject {
 	// MARK: -  PROPERTY
-	// MARK: -  New Habit Properties
+	// MARK:  New Habit Properties
 	// New Habit Properties
 	@Published var addNewHabit: Bool = false
 	@Published var title: String = ""
@@ -21,10 +21,13 @@ class HabitViewModel: ObservableObject {
 	@Published var remainderText: String = ""
 	@Published var remainderDate: Date = Date()
 	
-	// MARK: -  Remainder Time Picker
+	// MARK:  Remainder Time Picker
 	@Published var showTimerPicker: Bool = false
 	
-	// MARK: -  FUNCTION
+	// MARK: Editing Habit
+	@Published var editHabit: Habit?
+	
+	// MARK: - FUNCTION
 	
 	// MARK: -  Adding Habit to Database
 	func addHabit(context: NSManagedObjectContext) async -> Bool {
@@ -97,7 +100,6 @@ class HabitViewModel: ObservableObject {
 		return notificationIDs
 	}
 	
-	
 	// MARK: -  Erasing Content
 	func resetData() {
 		title = ""
@@ -106,7 +108,21 @@ class HabitViewModel: ObservableObject {
 		isRemainderOn = false
 		remainderDate = Date()
 		remainderText = ""
+		editHabit = nil
 	}
+	
+	// MARK: - Restoring Edit Data
+	func restoreEditData() {
+		if let editHabit = editHabit {
+			title = editHabit.title ?? ""
+			habitColor = editHabit.color ?? "Card-1"
+			weekDays = editHabit.weekDays ?? []
+			isRemainderOn = editHabit.isReminderOn
+			remainderDate = editHabit.notificationDate ?? Date()
+			remainderText = editHabit.reminderText ?? ""
+		}
+	}
+	
 	// MARK: -  Done Btn Status
 	func doneStatus() -> Bool {
 		let remainderStatus = isRemainderOn ? remainderText == "" : false

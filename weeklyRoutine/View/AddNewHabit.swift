@@ -126,6 +126,7 @@ struct AddNewHabit: View {
 			.navigationBarTitleDisplayMode(.inline)
 			.navigationTitle("새로운 루틴 추가하기")
 			.toolbar {
+				// MARK:  Close Btn
 				ToolbarItem(placement: .navigationBarLeading) {
 					Button {
 						env.dismiss()
@@ -134,6 +135,8 @@ struct AddNewHabit: View {
 					}
 					.tint(.white)
 				}
+				
+				// MARK:  Add Btn
 				ToolbarItem(placement: .navigationBarTrailing) {
 					Button {
 						Task {
