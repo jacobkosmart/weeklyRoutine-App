@@ -5,7 +5,7 @@
         <attribute name="dateAdded" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="isReminderOn" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="notificationDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="notificationDs" optional="YES" attributeType="Transformable" customClassName="[String]"/>
+        <attribute name="notificationIDs" optional="YES" attributeType="Transformable" customClassName="[String]"/>
         <attribute name="reminderText" optional="YES" attributeType="String"/>
         <attribute name="title" optional="YES" attributeType="String"/>
         <attribute name="weekDays" optional="YES" attributeType="Transformable" customClassName="[String]"/>

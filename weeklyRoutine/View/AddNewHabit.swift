@@ -10,12 +10,13 @@ import SwiftUI
 struct AddNewHabit: View {
 	// MARK: -  PROPERTY
 	@EnvironmentObject var vm: HabitViewModel
+	@Environment(\.self) var env
 	// MARK: -  BODY
 	var body: some View {
 		NavigationView {
 			VStack (spacing: 15) {
-				// MARK: Title
-				TextField("제목", text: $vm.title)
+				// MARK: - Title
+				TextField("제목 (필수)", text: $vm.title)
 					.padding(.horizontal)
 					.padding(.vertical, 10)
 					.background(Color("TFBG").opacity(0.6), in: RoundedRectangle(cornerRadius: 6, style: .continuous))
@@ -49,7 +50,7 @@ struct AddNewHabit: View {
 				VStack(alignment: .leading, spacing: 6) {
 					Text("요일")
 						.font(.callout.bold())
-					let weekDays = Calendar.current.weekdaySymbols ?? []
+					let weekDays = Calendar.current.weekdaySymbols
 					HStack (spacing: 10) {
 						ForEach(weekDays, id: \.self) { day in
 							let index = vm.weekDays.firstIndex { value in
@@ -74,8 +75,52 @@ struct AddNewHabit: View {
 								}
 						} //: LOOP
 					} //: HSTACK
+					.padding(.top, 15)
 				} //: VSTACK
+				
+				Divider()
+					.padding(.vertical, 10)
+				// MARK: -  Remainder Section
+				HStack () {
+					VStack (alignment: .leading, spacing: 6){
+						Text("알림 설정")
+							.fontWeight(.semibold)
+						
+					} //: VSTACK
+					.frame(maxWidth: .infinity, alignment: .leading)
+					
+					Toggle(isOn: $vm.isRemainderOn) {
+						
+					}
+					.labelsHidden()
+				} //: HSTACK
+				
+				HStack (spacing: 12) {
+					Label {
+						Text(vm.remainderDate.formatted(date: .omitted, time: .shortened))
+					} icon: {
+						Image(systemName: "clock")
+					}
+					.padding(.horizontal)
+					.padding(.vertical, 12)
+					.background(Color("TFBG").opacity(0.6), in: RoundedRectangle(cornerRadius: 6, style: .continuous))
+					.onTapGesture {
+						withAnimation {
+							vm.showTimerPicker.toggle()
+						}
+					}
+					
+					TextField("알림 내용 (필수)", text: $vm.remainderText)
+						.padding(.horizontal)
+						.padding(.vertical, 10)
+						.background(Color("TFBG").opacity(0.6), in: RoundedRectangle(cornerRadius: 6, style: .continuous))
+
+				} //: HSTACK
+				.frame(height: vm.isRemainderOn ? nil : 0)
+				.opacity(vm.isRemainderOn ? 1 : 0)
+				
 			} //: VSTACK
+			.animation(.easeInOut, value: vm.isRemainderOn)
 			.frame(maxHeight: .infinity, alignment: .top)
 			.padding()
 			.navigationBarTitleDisplayMode(.inline)
@@ -83,7 +128,7 @@ struct AddNewHabit: View {
 			.toolbar {
 				ToolbarItem(placement: .navigationBarLeading) {
 					Button {
-						
+						env.dismiss()
 					} label: {
 						Image(systemName: "xmark.circle")
 					}
@@ -91,14 +136,42 @@ struct AddNewHabit: View {
 				}
 				ToolbarItem(placement: .navigationBarTrailing) {
 					Button {
-						
+						if vm.addHabit(context: env.managedObjectContext) {
+							env.dismiss()
+						}
 					} label: {
 						Text("추가")
 					}
 					.tint(.white)
+					.disabled(!vm.doneStatus())
+					.opacity(vm.doneStatus() ? 1 : 0.6)
 				}
 			}
 		} //: NAVIGATION
+		.overlay {
+			if vm.showTimerPicker {
+				ZStack {
+					Rectangle()
+						.fill(.ultraThinMaterial)
+						.ignoresSafeArea()
+						.onTapGesture {
+							withAnimation {
+								vm.showTimerPicker.toggle()
+							}
+						}
+					
+					DatePicker.init("", selection:$vm.remainderDate, displayedComponents: [.hourAndMinute])
+						.datePickerStyle(.wheel)
+						.labelsHidden()
+						.padding()
+						.background {
+							RoundedRectangle(cornerRadius: 10)
+								.fill(Color("TFBG"))
+						}
+						.padding()
+				} //: ZSTACK
+			}
+		} //: OVERLAY
 	}
 }
 

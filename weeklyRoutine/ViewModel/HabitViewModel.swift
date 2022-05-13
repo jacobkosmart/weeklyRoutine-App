@@ -10,6 +10,7 @@ import CoreData
 
 class HabitViewModel: ObservableObject {
 	// MARK: -  PROPERTY
+	// MARK: -  New Habit Properties
 	// New Habit Properties
 	@Published var addNewHabit: Bool = false
 	@Published var title: String = ""
@@ -18,7 +19,52 @@ class HabitViewModel: ObservableObject {
 	@Published var isRemainderOn: Bool = false
 	@Published var remainderText: String = ""
 	@Published var remainderDate: Date = Date()
-	// MARK: -  INIT
+	
+	// MARK: -  Remainder Time Picker
+	@Published var showTimerPicker: Bool = false
+	
 	// MARK: -  FUNCTION
+	
+	// MARK: -  Adding Habit to Database
+	func addHabit(context: NSManagedObjectContext) -> Bool {
+		let habit = Habit(context: context)
+		habit.title = title
+		habit.color = habitColor
+		habit.weekDays = weekDays
+		habit.isReminderOn = isRemainderOn
+		habit.reminderText = remainderText
+		habit.notificationDate = remainderDate
+		habit.notificationIDs = []
+		
+		if isRemainderOn{
+			// MARK: -  Scheduling Notifications
+		} else {
+			// MARK: -  Adding Data
+			if let _ = try? context.save() {
+				return true
+			}
+		}
+		return false
+	}
+	
+	// MARK: -  Erasing Content
+	func resetData() {
+		title = ""
+		habitColor = "Card-1"
+		weekDays = []
+		isRemainderOn = false
+		remainderDate = Date()
+		remainderText = ""
+	}
+	// MARK: -  Done Btn Status
+	func doneStatus() -> Bool {
+		let remainderStatus = isRemainderOn ? remainderText == "" : false
+		
+		if title == "" || weekDays.isEmpty || remainderStatus {
+			return false
+		}
+		return true
+	}
 }
+
 

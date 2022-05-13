@@ -56,9 +56,11 @@ struct Home: View {
 		.frame(maxHeight: .infinity, alignment: .top)
 		.padding()
 		.sheet(isPresented: $vm.addNewHabit) {
-			
+			// MARK:  Erasing all Exsisting Content
+			vm.resetData()
 		} content: {
-			
+			AddNewHabit()
+				.environmentObject(vm)
 		}
 
 	}
