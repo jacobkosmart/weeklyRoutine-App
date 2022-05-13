@@ -81,7 +81,8 @@ struct AddNewHabit: View {
 				Divider()
 					.padding(.vertical, 10)
 				// MARK: -  Remainder Section
-				HStack () {
+				// Hiding if Notification Access is Rejected
+				HStack {
 					VStack (alignment: .leading, spacing: 6){
 						Text("알림 설정")
 							.fontWeight(.semibold)
@@ -94,7 +95,9 @@ struct AddNewHabit: View {
 					}
 					.labelsHidden()
 				} //: HSTACK
+				.opacity(vm.notificationAccess ? 1 : 0)
 				
+			
 				HStack (spacing: 12) {
 					Label {
 						Text(vm.remainderDate.formatted(date: .omitted, time: .shortened))
@@ -118,6 +121,7 @@ struct AddNewHabit: View {
 				} //: HSTACK
 				.frame(height: vm.isRemainderOn ? nil : 0)
 				.opacity(vm.isRemainderOn ? 1 : 0)
+				.opacity(vm.notificationAccess ? 1 : 0)
 				
 			} //: VSTACK
 			.animation(.easeInOut, value: vm.isRemainderOn)

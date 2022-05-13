@@ -27,7 +27,25 @@ class HabitViewModel: ObservableObject {
 	// MARK: Editing Habit
 	@Published var editHabit: Habit?
 	
+	// MARK:  Notification Access Status
+	@Published var notificationAccess: Bool = false
+	
+	// MARK: - INIT
+	init() {
+		requestNotificationAccess()
+	}
+	
 	// MARK: - FUNCTION
+	
+	// MARK: - Notification Access func
+	func requestNotificationAccess() {
+		UNUserNotificationCenter.current().requestAuthorization(options: [.sound, .alert]) { status, _ in
+			DispatchQueue.main.async {
+				self.notificationAccess = status
+			}
+		}
+	}
+	
 	
 	// MARK: -  Adding Habit to Database
 	func addHabit(context: NSManagedObjectContext) async -> Bool {
