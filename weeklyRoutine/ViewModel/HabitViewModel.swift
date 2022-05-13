@@ -123,6 +123,17 @@ class HabitViewModel: ObservableObject {
 		}
 	}
 	
+	// MARK: - Deleting Habit From DB
+	func deleteHabit(context: NSManagedObjectContext)-> Bool {
+		if let editHabit = editHabit {
+			context.delete(editHabit)
+			if let _ = try? context.save() {
+				return true
+			}
+		}
+		return false
+	}
+	
 	// MARK: -  Done Btn Status
 	func doneStatus() -> Bool {
 		let remainderStatus = isRemainderOn ? remainderText == "" : false

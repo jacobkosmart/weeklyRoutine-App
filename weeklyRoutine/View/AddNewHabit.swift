@@ -124,7 +124,7 @@ struct AddNewHabit: View {
 			.frame(maxHeight: .infinity, alignment: .top)
 			.padding()
 			.navigationBarTitleDisplayMode(.inline)
-			.navigationTitle("새로운 루틴 추가하기")
+			.navigationTitle(vm.editHabit != nil ? "루틴 수정하기" : "새로운 루틴 추가하기")
 			.toolbar {
 				// MARK:  Close Btn
 				ToolbarItem(placement: .navigationBarLeading) {
@@ -134,6 +134,19 @@ struct AddNewHabit: View {
 						Image(systemName: "xmark.circle")
 					}
 					.tint(.white)
+				}
+				
+				// MARK:  Delete Btn
+				ToolbarItem(placement: .navigationBarLeading) {
+					Button {
+						if vm.deleteHabit(context: env.managedObjectContext) {
+							env.dismiss()
+						}
+					} label: {
+						Image(systemName: "trash")
+					}
+					.tint(.red)
+					.opacity(vm.editHabit == nil ? 0 : 1)
 				}
 				
 				// MARK:  Add Btn
